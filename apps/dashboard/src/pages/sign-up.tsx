@@ -9,6 +9,7 @@ import { IS_SELF_HOSTED } from '../config';
 import { useSegment } from '../context/segment';
 import { TelemetryEvent } from '../utils/telemetry';
 import { getReferrer, getUtmParams } from '../utils/tracking';
+import { SignUp as SelfHostedSignUp } from '../utils/self-hosted';
 
 export const SignUpPage = () => {
   const segment = useSegment();
@@ -22,6 +23,20 @@ export const SignUpPage = () => {
       referrer,
     });
   }, []);
+
+  if (IS_SELF_HOSTED) {
+    return (
+      <div className="flex min-h-screen w-full flex-col md:max-w-[1100px] md:flex-row md:gap-36">
+        <PageMeta title="Sign up" />
+        <div className="w-full md:w-auto">
+          <AuthSideBanner />
+        </div>
+        <div className="flex flex-1 justify-end px-4 py-0 sm:py-0 md:items-center md:px-0">
+          <SelfHostedSignUp />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen w-full flex-col md:max-w-[1100px] md:flex-row md:gap-36">
